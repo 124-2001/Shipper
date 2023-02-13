@@ -18,7 +18,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     List<Order> findByStatus(StatusOrder statusOrder);
 
-    Order findByStatusAndIdAAndShipper(StatusOrder statusOrder,int idOrder,Shipper shipper);
+    List<Order> findByStatusAndCustomer(StatusOrder statusOrder,Customer customer);
 
-    Order findByCustomerAndStatus(Optional<Customer> customer, StatusOrder statusOrder);
+    /*Order findByCustomerAndStatus(Optional<Customer> customer, StatusOrder statusOrder);*/
 }

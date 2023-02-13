@@ -36,19 +36,27 @@ public class CustomerService {
         return false;
     }
     //tao don order moi voi trang thai waiting de cho shipper giao
-    public void makeOrderWithNewProduct(int idCustomer, List<Product> products){
+    public Order makeOrderWithNewProduct(int idCustomer, List<Product> products){
         if(findCustomer(idCustomer)){
             Order order = new Order();
             order.setCustomer(customerRepository.findById(idCustomer).get());
             order.setProducts(products);
             order.setPrice(orderService.getPriceInOrder(order));
             order.setStatus(StatusOrder.WAITING);
-            orderRepository.save(order);
+
             //tru tien sau khi tao don hang
             Customer customer = customerRepository.findById(idCustomer).get();
             customer.getWallet_customer().setBalance(customer.getWallet_customer().getBalance()-orderService.getPriceInOrder(order));
             customerRepository.save(customer);
+            orderRepository.save(order);
+            return order;
         }
+        return null;
+    }
+
+    public List<Order> showListOrdersComplete(int idCustomer){
+        Customer customer = customerRepository.findById(idCustomer).get();
+        return orderRepository.findByStatusAndCustomer(StatusOrder.SUCCESSFULLY,customer);
     }
 
     public void voteForShipperInOrder(int idCustomer,int idOrder,int voteRate){

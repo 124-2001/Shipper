@@ -2,6 +2,6 @@
 2, customer dat don voi product vao tao len trang order va tien se tru trong wallet cua customer voi
    trang thai order la chua co nguoi nhan(waiting)
 3,shipper nhan don bang cach tim trong list order nhung don trang thai waiting va accpet de chuyen sang trang thai (OK)
-4 sau khi nhan don giao xong va don doi trang thai thanh (SUCCESSFULLY hoac COMPLETE) dong thoi tien se cong vao wallet shipper tien don hang
+4, sau khi nhan don giao xong va don doi trang thai thanh (SUCCESSFULLY hoac COMPLETE) dong thoi tien se cong vao wallet shipper tien don hang
 5, khi giao hang xong tim nhung don trong order co trang thai (SUCCESSFULLY hoac COMPLETE) cua customer do de vote
    (neu vote tren 3 thi se cong them hoa hong vao wallet cua shipper tren order)

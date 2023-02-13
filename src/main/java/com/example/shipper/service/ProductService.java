@@ -16,14 +16,14 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public void insertProduct(List<ProductDTO> productDTOS){
+
+/*    public void insertProduct(List<ProductDTO> productDTOS){
         ModelMapper mapper = new ModelMapper();
 
         for (ProductDTO productDTO : productDTOS) {
             Product product = mapper.map(productDTO,Product.class);
             productRepository.save(product);
         }
-    }
-    //lay gia cua moi product
-    public void getPrice(Product product){}
+    }*/
+
 }

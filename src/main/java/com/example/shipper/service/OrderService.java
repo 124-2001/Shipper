@@ -28,28 +28,21 @@ public class OrderService {
 
     public float getPriceInOrder(Order order){
         List<Product> products = order.getProducts();
+        float weight=0;
         for (Product product : products) {
-            if(product.getWeight()<=10){
-                order.setPrice(order.getPrice()+15);
-            }
-            else if(product.getWeight()<=20){
-                order.setPrice(order.getPrice()+20);
-            }
-            else {
-                order.setPrice(order.getPrice()+30);
-            }
+            weight+=product.getWeight();
         }
-        return order.getPrice();
+        if(weight<10){
+            return 15000;
+        } else if (10<weight&&weight<=20) {
+            return 20000;
+        }else {
+            return 30000;
+        }
     }
 
     //tim order(idOrder) trong list don hang trang thai ok cua shipper(idShipper) de update thanh SUCCES va cong tien cho shipper do
-    public void updateOrderAndSalary(int idShipper,int idOrder){
-        Order order =orderRepository.findByStatusAndIdAAndShipper(StatusOrder.OK,idOrder,shipperRepository.findById(idShipper).get());
-        order.setStatus(StatusOrder.SUCCESSFULLY);
-        Shipper shipper = shipperRepository.findById(idShipper).get();
-        shipper.getWallet_shipper().setBalance(shipper.getWallet_shipper().getBalance()+order.getPrice());
-        walletRepository.save(shipper.getWallet_shipper());
-        orderRepository.save(order);
-    }
+
+
 
 }

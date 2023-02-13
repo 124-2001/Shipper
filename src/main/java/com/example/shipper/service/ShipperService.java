@@ -6,6 +6,7 @@ import com.example.shipper.model.eNum.Quantity;
 import com.example.shipper.model.eNum.StatusOrder;
 import com.example.shipper.repository.OrderRepository;
 import com.example.shipper.repository.ShipperRepository;
+import com.example.shipper.repository.WalletRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class ShipperService {
 
     @Autowired
     OrderRepository orderRepository;
-
+    @Autowired
+    WalletRepository walletRepository;
     @Autowired
     OrderService orderService;
 
@@ -47,8 +49,8 @@ public class ShipperService {
     }
 
     //nhan don hang moi voi idOrder
-    public void getNewOrderById(int idOrder,int idShipper){
-        List<Order> orders= orderRepository.findByStatus(StatusOrder.WAITING);
+    public Order getNewOrderById(int idOrder,int idShipper){
+        List<Order> orders= getListOrdersWaiting();
         for (Order order : orders) {
             if(order.getId()==idOrder){
                 order.setShipper(shipperRepository.findById(idOrder).get());
@@ -58,6 +60,17 @@ public class ShipperService {
                 break;
             }
         }
+        return orderRepository.findById(idOrder).get();
+    }
+
+    public Order updateOrderAndSalary(int idOrder,int idShipper){
+        Order order =orderRepository.findById(idOrder).get();
+        order.setStatus(StatusOrder.SUCCESSFULLY);
+        Shipper shipper = shipperRepository.findById(idShipper).get();
+        shipper.getWallet_shipper().setBalance(shipper.getWallet_shipper().getBalance()+order.getPrice());
+        walletRepository.save(shipper.getWallet_shipper());
+        orderRepository.save(order);
+        return order;
     }
 
 }
